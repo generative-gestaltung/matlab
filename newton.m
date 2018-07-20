@@ -1,21 +1,19 @@
-function y = f1(x)
-  y = 3*x*x*x - 2*x*x + x + 3 
-end
+function [iteration, last] = newton (F, dF, x0, tol, n)
 
-function y = dF1(x)
-  y = 9*x*x - 4*x
-end
-
-function [ns] = newton (F, dF, x0, tol, n)
-
-  res = [x0]
+  iteration = x0;
+  %dF(res(end))
   for i=1:n
-    xnext = res(end) - F(res(end)) / dF(res(end))
-    res = [res:xnext]
+    dF(iteration(end));
+    xnext = iteration(end) - (F(iteration(end)) / dF(iteration(end)));
+    if (abs(xnext-iteration(end)) < tol) 
+        last = iteration(end);
+        return 
+    end
+    iteration = [iteration,xnext];
   end
+  
+   last = iteration(end);
 end
-
-
 
 
 
